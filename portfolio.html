@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e4e4e4">
+  <title>Portfolio — Imaginary</title>
+  <link rel="stylesheet" href="css/styles.css?v=20261021-11">
+</head>
+<body>
+
+  <header class="nav" aria-label="Site">
+    <a class="nav__logo" href="index.html" aria-label="Imaginary home"><img src="assets/icons/logo-nav.svg" alt="" width="100.518" height="13"></a>
+    <button class="nav__menu" type="button" data-menu-open aria-expanded="false" aria-label="Open menu"><img src="assets/icons/menu-dark.svg" alt="" width="24" height="24"></button>
+  </header>
+
+  <div class="menu" aria-hidden="true">
+    <nav class="menu__panel" aria-label="Main">
+      <a class="menu__logo" href="index.html" aria-label="Imaginary home"><img src="assets/icons/logo-menu.svg" alt="" width="100.518" height="13"></a>
+      <button class="menu__close" type="button" aria-label="Close menu"><img src="assets/icons/close.svg" alt="" width="24" height="24"></button>
+      <ul class="menu__links">
+        <li><a href="team.html">Team</a></li>
+        <li><a href="portfolio.html" aria-current="page">Portfolio</a></li>
+        <li><a href="index.html#contact">Investor</a></li>
+      </ul>
+      <div class="menu__scrim"></div>
+    </nav>
+  </div>
+
+  <main class="page">
+
+    <!-- Intro (Figma 3186:2074) -->
+    <section class="intro p-intro">
+      <button class="menu-trigger" type="button" data-menu-open aria-expanded="false" aria-label="Open menu">
+        <img src="assets/icons/menu-portfolio.svg" alt="" width="27.4809" height="27.4809">
+      </button>
+      <div class="intro__text" data-reveal style="--d:.2s">
+        <div class="intro__logo"><img src="assets/icons/logo-portfolio.svg" alt="Imaginary" width="112.778" height="14.5856"></div>
+        <h1>invests across stages and industries, partnering with companies that resonate in modern consumer culture and create desire uniquely.</h1>
+      </div>
+    </section>
+
+    <!-- Featured companies — swipe / trackpad horizontally -->
+    <section class="p-featured" aria-label="Featured companies" tabindex="0">
+      <div class="p-featured__track">
+        <div class="feature" data-inview>
+          <div class="feature__media" style="left:-15.525rem;top:-1.0125rem;width:83.8432rem;height:46.8953rem"><img src="assets/featured/skims.jpg" alt="" loading="lazy" decoding="async"></div>
+          <p class="feature__label feature__label--skims">Skims</p>
+        </div>
+        <div class="feature" data-inview>
+          <div class="feature__media" style="left:-54.4rem;top:-1.2rem;width:118.6603rem;height:53.3559rem"><img src="assets/featured/westman.png" alt="" loading="lazy" decoding="async"></div>
+          <p class="feature__label">Westman Atelier</p>
+        </div>
+        <div class="feature" data-inview>
+          <div class="feature__media" style="left:-17.6rem;top:-1.1rem;width:83.7rem;height:47.1rem"><img src="assets/featured/glossgenius.jpg" alt="" loading="lazy" decoding="async"></div>
+          <p class="feature__label">GLOSS GENIUS</p>
+        </div>
+        <div class="feature feature--red" data-inview>
+          <div class="feature__media" style="left:-19.3rem;top:-1.2rem;width:72.4rem;height:48.3rem"><img src="assets/featured/bero.jpg" alt="" loading="lazy" decoding="async"></div>
+          <p class="feature__label">BERO</p>
+        </div>
+        <div class="feature feature--red" data-inview>
+          <div class="feature__media" style="left:-3.8rem;top:-0.5rem;width:39.2rem;height:45.9rem"><img class="crop" src="assets/featured/david.png" alt="" loading="lazy" decoding="async" style="left:-141.68%;top:-16.13%;width:241.68%;height:116.08%"></div>
+          <p class="feature__label">DAVID</p>
+        </div>
+        <div class="feature feature--red" data-inview>
+          <div class="feature__media" style="left:-1.3rem;top:-4.7rem;width:36.4rem;height:54.5rem"><img src="assets/featured/reale.jpg" alt="" loading="lazy" decoding="async"></div>
+          <p class="feature__label">reale actives</p>
+        </div>
+        <div class="feature" data-inview>
+          <div class="feature__media" style="left:-24.6rem;top:-1.5rem;width:85.8rem;height:48rem"><img src="assets/featured/nordic.jpg" alt="" loading="lazy" decoding="async"></div>
+          <p class="feature__label">NORDIC KNOTS</p>
+        </div>
+        <div class="feature feature--deep" data-inview>
+          <div class="feature__media" style="left:-8.6rem;top:-1.3rem;width:50.9rem;height:47.7rem"><img src="assets/featured/sundays.png" alt="" loading="lazy" decoding="async"></div>
+          <p class="feature__label">SUNDAYS</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters + sticky image window + full listing (Figma 3186:2107) -->
+    <section class="p-list" aria-label="All portfolio companies">
+      <div class="p-list__head">
+        <div class="chips" role="toolbar" aria-label="Filter by category"></div>
+        <div class="p-thumb" aria-live="polite"></div>
+      </div>
+      <div class="p-rows"></div>
+    </section>
+
+    <!-- Footer (Figma 3186:2255) -->
+    <footer class="footer" id="contact">
+      <img class="footer__bg" data-parallax="0.15" data-anchor="bottom" src="assets/img/footer-clouds.jpg" alt="" width="1694.656" height="1694.656" loading="lazy" decoding="async">
+      <p class="footer__cta" data-reveal>Building something Imaginary?<br><a href="mailto:?subject=Building%20something%20Imaginary">Get in touch</a>.</p>
+      <nav class="footer__links" aria-label="Social">
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LINKEDIN</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">INSTAGRAM</a>
+      </nav>
+    </footer>
+  </main>
+
+  <script src="js/main.js?v=20261021-11"></script>
+  <script src="js/portfolio.js?v=20261021-11"></script>
+</body>
+</html>

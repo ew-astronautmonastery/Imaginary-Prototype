@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f0f0f">
+  <title>Imaginary</title>
+  <link rel="preload" as="image" href="assets/img/hero.jpg">
+  <link rel="stylesheet" href="css/styles.css?v=20261021-11">
+</head>
+<body>
+
+  <!-- Nav bar (Figma 3185:624) -->
+  <header class="nav" aria-label="Site">
+    <a class="nav__logo" href="index.html" aria-label="Imaginary home"><img src="assets/icons/logo-nav.svg" alt="" width="100.518" height="13"></a>
+    <button class="nav__menu" type="button" data-menu-open aria-expanded="false" aria-label="Open menu"><img src="assets/icons/menu-dark.svg" alt="" width="24" height="24"></button>
+  </header>
+
+  <!-- Menu (Figma 3185:604) -->
+  <div class="menu" aria-hidden="true">
+    <nav class="menu__panel" aria-label="Main">
+      <a class="menu__logo" href="index.html" aria-label="Imaginary home"><img src="assets/icons/logo-menu.svg" alt="" width="100.518" height="13"></a>
+      <button class="menu__close" type="button" aria-label="Close menu"><img src="assets/icons/close.svg" alt="" width="24" height="24"></button>
+      <ul class="menu__links">
+        <li><a href="team.html">Team</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="index.html#contact">Investor</a></li>
+      </ul>
+      <div class="menu__scrim"></div>
+    </nav>
+  </div>
+
+  <main class="page">
+
+    <!-- Hero + introduction (Figma 3185:484) -->
+    <section class="h-hero">
+      <img class="h-hero__img" data-parallax="0.25" src="assets/img/hero.jpg" alt="Figure in a white dress with her head in a cloud" width="876" height="876">
+
+      <button class="menu-trigger menu-trigger--home" type="button" data-menu-open aria-expanded="false" aria-label="Open menu">
+        <img src="assets/icons/menu-white.svg" alt="" width="27.4809" height="27.4809">
+      </button>
+
+      <div class="h-hero__tag" data-reveal style="--d:.35s">
+        <p>all the best brands start</p>
+        <img src="assets/icons/logo-hero.svg" alt="Imaginary" width="120.229" height="15.5492">
+        <h1 class="sr-only">Imaginary — all the best brands start Imaginary</h1>
+      </div>
+
+      <div class="h-hero__fade"></div>
+      <img class="h-hero__clouds" src="assets/img/clouds-man.jpg" alt="" width="1180" height="1475" loading="lazy" decoding="async">
+
+      <div class="h-checks__text" data-reveal>
+        <p>We write checks from $1M to $100M</p>
+        <p>at any stage, from ideation to late growth. We cover the full surface area of Consumer and selectively invest in adjacent categories that power the consumer ecosystem.</p>
+      </div>
+
+      <div class="h-stage h-stage--early" data-reveal style="--d:.15s">
+        <div class="h-stage__rule" aria-hidden="true"></div>
+        <p>Early Stage investments with check sizes ranging from $1–15M, spanning pre-seed to Series A.</p>
+      </div>
+      <div class="h-stage h-stage--growth" data-reveal style="--d:.3s">
+        <div class="h-stage__rule" aria-hidden="true"></div>
+        <p>Growth investments with check sizes ranging from $15–100M, spanning Series B to Pre-IPO.</p>
+      </div>
+
+      <div class="h-intro" id="about" data-reveal>
+        <p>We are a leading venture capital firm</p>
+        <p>dedicated to building and partnering with iconic, generationally-defining consumer businesses.</p>
+      </div>
+    </section>
+
+    <!-- Portfolio logos (Figma 3185:539) -->
+    <section class="h-logos" aria-label="Portfolio companies">
+      <div class="h-logos__grid">
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:0s;width:9.0289rem;height:1.81rem"><img class="fit-contain" src="assets/logos/skims.png" alt="Skims"></div></div>
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:.06s;width:8rem;height:2.8780rem"><img class="fit-cover" src="assets/logos/hum.png" alt="Hum Nutrition"></div></div>
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:.12s;width:8.0939rem;height:2.8696rem"><img class="fit-cover" src="assets/logos/nordic.png" alt="Nordic Knots"></div></div>
+
+        <div class="logo-cell"><div class="logo logo--multiply" data-reveal="fade" style="--d:0s;width:10.5690rem;height:3.0189rem"><img src="assets/logos/reale.png" alt="Reale Actives" style="left:0;top:-46.58%;width:100%;height:193.16%"></div></div>
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:.06s;width:9.3860rem;height:0.9849rem"><img class="fit-cover" src="assets/logos/glossgenius.png" alt="GlossGenius"></div></div>
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:.12s;width:6.8925rem;height:3.8770rem"><img class="fit-cover" src="assets/logos/bero.png" alt="Bero"></div></div>
+
+        <div class="logo-cell"><div class="logo logo--multiply" data-reveal="fade" style="--d:0s;width:10.4328rem;height:2.6082rem"><img class="fit-cover" src="assets/logos/bathhouse.png" alt="Bathhouse"></div></div>
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:.06s;width:8.0385rem;height:3.0380rem"><img class="fit-cover" src="assets/logos/alecs.png" alt="Alec's Ice Cream"></div></div>
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:.12s;width:10.1068rem;height:0.7304rem"><img src="assets/logos/danielle.png" alt="Danielle Frankel" style="left:-6.96%;top:-126.99%;width:113.92%;height:388.61%"></div></div>
+
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:0s;width:4.0925rem;height:3.8352rem"><img src="assets/logos/glossier.png" alt="Glossier" style="left:-45.75%;top:-32.19%;width:191.51%;height:164.37%"></div></div>
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:.06s;width:6.3909rem;height:1.5338rem"><img class="fit-cover" src="assets/logos/mejuri.png" alt="Mejuri"></div></div>
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:.12s;width:8.5167rem;height:4.2413rem"><img class="fit-cover" src="assets/logos/mila.png" alt="Milá"></div></div>
+
+        <div class="logo-cell"><div class="logo logo--multiply" data-reveal="fade" style="--d:0s;width:9.0289rem;height:1.4598rem"><img class="fit-fill" src="assets/logos/pov.png" alt="Point of View"></div></div>
+        <div class="logo-cell"><div class="logo logo--multiply" data-reveal="fade" style="--d:.06s;width:8.7646rem;height:2.8468rem"><img src="assets/logos/sundays.png" alt="Sundays" style="left:-14.55%;top:-54.34%;width:129.11%;height:208.69%"></div></div>
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:.12s;width:9.0289rem;height:1.2829rem"><img src="assets/logos/westman.png" alt="Westman Atelier" style="left:-6.5%;top:-111.23%;width:113%;height:322.45%"></div></div>
+
+        <div class="logo-cell"><div class="logo logo--multiply" data-reveal="fade" style="--d:0s;width:5.6363rem;height:1.4355rem"><img class="fit-fill" src="assets/logos/thefeed.png" alt="The Feed"></div></div>
+        <div class="logo-cell"><div class="logo logo--tincan" data-reveal="fade" style="--d:.06s;width:5.4379rem;height:2.4755rem"><img class="fit-fill" src="assets/logos/tincan.svg" alt="Tin Can" width="54.379" height="24.755"></div></div>
+        <div class="logo-cell"><div class="logo" data-reveal="fade" style="--d:.12s;width:3.4567rem;height:5.4513rem"><img src="assets/logos/jmm.png" alt="Jacques Marie Mage" style="left:-41.97%;top:-8.32%;width:183.94%;height:116.63%"></div></div>
+      </div>
+      <a class="h-logos__all" href="portfolio.html">see all portfolio companies</a>
+    </section>
+
+    <!-- Footer (Figma 3185:588) -->
+    <footer class="footer" id="contact">
+      <img class="footer__bg" data-parallax="0.15" data-anchor="bottom" src="assets/img/footer-clouds.jpg" alt="" width="1694.656" height="1694.656" loading="lazy" decoding="async">
+      <p class="footer__cta" data-reveal>Building something Imaginary?<br><a href="mailto:?subject=Building%20something%20Imaginary">Get in touch</a>.</p>
+      <nav class="footer__links" aria-label="Social">
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LINKEDIN</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">INSTAGRAM</a>
+      </nav>
+    </footer>
+  </main>
+
+  <script src="js/main.js?v=20261021-11"></script>
+</body>
+</html>

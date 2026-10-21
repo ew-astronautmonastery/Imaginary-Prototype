@@ -1,0 +1,719 @@
+/* ==========================================================================
+   IMAGINARY — mobile prototype
+   Units: 1rem = 10 Figma px at the 450px design width. The root size scales
+   with the viewport so every phone width keeps the Figma proportions; on
+   wider screens the page is presented as a 450px column.
+   ========================================================================== */
+
+:root {
+  --light: #e4e4e4;
+  --dark: #121212;
+  --menu: #070707;
+  --muted: #808080;
+  --chip-active: #d9d9d9;
+  --thumb-empty: #9f9f9f;
+  --rule: rgba(0, 0, 0, 0.14);
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-io: cubic-bezier(0.76, 0, 0.24, 1);
+  --reveal-dur: 1.2s;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: min(10px, calc(100vw / 45));
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: #0b0b0b;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  color: #000;
+  background: #0b0b0b;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+}
+
+body.is-locked { overflow: hidden; }
+
+img { display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+ul { list-style: none; }
+h1, h2, h3 { font: inherit; }
+
+.page {
+  position: relative;
+  width: 45rem;
+  margin: 0 auto;
+  overflow-x: clip;
+  background: var(--light);
+  animation: page-in 0.7s var(--ease-out) both;
+}
+html.is-leaving .page { opacity: 0; transition: opacity 0.35s ease; }
+
+@keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ---------- Scroll reveal ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 1.6rem, 0);
+  transition: opacity var(--reveal-dur) var(--ease-out), transform var(--reveal-dur) var(--ease-out);
+  transition-delay: var(--d, 0s);
+}
+[data-reveal="fade"] { transform: none; }
+[data-reveal].is-in { opacity: 1; transform: none; }
+
+/* ==========================================================================
+   Top-of-page menu trigger (Figma: menu icon in each page's first frame)
+   ========================================================================== */
+.menu-trigger {
+  position: absolute;
+  top: 2.29rem;
+  left: 39.925rem;
+  width: 2.748rem;
+  height: 2.748rem;
+  z-index: 20;
+}
+.menu-trigger img { width: 100%; height: 100%; }
+.menu-trigger--home { left: 39.962rem; }
+
+/* ==========================================================================
+   Nav bar (Figma 3185:624) — slides in when scrolling back up
+   ========================================================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 45rem;
+  height: 7.3rem;
+  margin-left: -22.5rem;
+  /* Clear frosted glass */
+  background: rgba(228, 228, 228, 0.55);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  backdrop-filter: blur(20px) saturate(1.2);
+  z-index: 40;
+  transform: translate3d(0, -100%, 0);
+  transition: transform 0.55s var(--ease-io);
+}
+.nav.is-shown { transform: none; }
+.nav__logo { position: absolute; left: 2rem; top: 3rem; width: 10.0518rem; height: 1.3rem; }
+.nav__logo img { width: 100%; height: 100%; }
+.nav__menu { position: absolute; left: 40.136rem; top: 2.4rem; width: 2.4rem; height: 2.4rem; }
+.nav__menu img { width: 100%; height: 100%; }
+
+/* ==========================================================================
+   Expanded menu (Figma 3185:604) — half-height panel, blurred page behind
+   ========================================================================== */
+.menu { position: fixed; inset: 0; z-index: 100; pointer-events: none; }
+.menu.is-open { pointer-events: auto; }
+
+/* Frosted glass hangs off the panel's bottom edge and travels with it, so
+   everything below the sliding panel is frosted at every frame, and content
+   hidden behind the panel never smears out under its edge. Confined to the
+   450 column, so nothing blurs into a halo at the sides. */
+.menu__scrim {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 45rem;
+  height: 100vh;
+  height: 100lvh;
+  background: rgba(255, 255, 255, 0.22);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  backdrop-filter: blur(18px) saturate(1.15);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+}
+.menu__close:focus { outline: none; }
+.menu__close:focus-visible { outline: 0.1rem solid rgba(255, 255, 255, 0.6); outline-offset: 0.4rem; }
+.menu.is-open .menu__scrim { opacity: 1; transition-duration: 0.3s; }
+
+.menu__panel {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 45rem;
+  height: 45rem;
+  margin-left: -22.5rem;
+  background: var(--menu);
+  transform: translate3d(0, -100%, 0);
+  transition: transform 0.7s var(--ease-io);
+}
+.menu.is-open .menu__panel { transform: none; }
+
+.menu__logo { position: absolute; left: 2rem; top: 3rem; width: 10.0518rem; height: 1.3rem; }
+.menu__logo img { width: 100%; height: 100%; }
+.menu__close { position: absolute; left: 40.1rem; top: 2.4rem; width: 2.4rem; height: 2.4rem; }
+.menu__close img { width: 100%; height: 100%; transition: transform 0.5s var(--ease-out); }
+.menu__close:hover img { transform: rotate(90deg); }
+
+.menu__links { position: absolute; left: 2rem; top: 8.3rem; }
+.menu__links li {
+  opacity: 0;
+  transform: translate3d(0, 1rem, 0);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+.menu__links li + li { margin-top: 0.3rem; }
+.menu.is-open .menu__links li { opacity: 1; transform: none; }
+.menu.is-open .menu__links li:nth-child(1) { transition-delay: 0.28s; }
+.menu.is-open .menu__links li:nth-child(2) { transition-delay: 0.34s; }
+.menu.is-open .menu__links li:nth-child(3) { transition-delay: 0.40s; }
+.menu.is-open .menu__links li:nth-child(4) { transition-delay: 0.46s; }
+.menu__links a {
+  display: block;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  color: #fff;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+.menu__links a:hover { color: rgba(255, 255, 255, 0.5); }
+
+/* ==========================================================================
+   Footer (Figma 3185:588)
+   ========================================================================== */
+.footer {
+  position: relative;
+  height: 45rem;
+  background: var(--dark);
+  overflow: hidden;
+  color: #fff;
+}
+.footer__bg {
+  position: absolute;
+  left: -62.19rem;
+  top: -62.519rem;
+  width: 169.4656rem;
+  height: 169.4656rem;
+  object-fit: cover;
+  pointer-events: none;
+}
+.footer__cta {
+  position: absolute;
+  top: 20.1rem;
+  left: 2rem;
+  width: 41rem;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  text-align: center;
+}
+.footer__cta a { color: rgba(255, 255, 255, 0.55); transition: color 0.3s ease; }
+.footer__cta a:hover { color: #fff; }
+.footer__links {
+  position: absolute;
+  top: 38.7rem;
+  left: 0;
+  right: 0.1rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  text-transform: uppercase;
+}
+.footer__links a { transition: color 0.3s ease; }
+.footer__links a:hover { color: rgba(255, 255, 255, 0.6); }
+
+
+/* ==========================================================================
+   HOME
+   ========================================================================== */
+.h-hero {
+  /* Extra scroll between the "leading venture capital firm" and
+     "writes checks" blurbs, so they arrive one at a time */
+  --blurb-gap: 6rem;
+  /* How far the cloud photo rises up behind the "writes checks" copy */
+  --cloud-lift: 22rem;
+  position: relative;
+  height: calc(200rem + var(--blurb-gap) - var(--cloud-lift));
+  /* Matches the gradient's solid end so no lighter ground shows through
+     where the cloud photo dissolves in (the hero photo covers the top) */
+  background: #0f0f0f;
+  overflow: hidden;
+}
+.h-hero__img {
+  position: absolute;
+  left: -21.3rem;
+  top: -3.8rem;
+  width: 87.6rem;
+  height: 87.6rem;
+  object-fit: cover;
+  animation: hero-settle 2.4s var(--ease-out) both;
+}
+@keyframes hero-settle { from { transform: scale(1.06); } to { transform: none; } }
+
+.h-hero__tag {
+  position: absolute;
+  top: 38.015rem;
+  left: 0.014rem;
+  right: 0;
+  text-align: center;
+  color: #fff;
+}
+.h-hero__tag p {
+  font-size: 2.0611rem;
+  line-height: 2.2901rem;
+  letter-spacing: -0.02061rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.h-hero__tag img { width: 12.0229rem; height: 1.5549rem; margin: 0.088rem auto 0; }
+
+.h-hero__fade {
+  position: absolute;
+  top: 65.9rem;
+  left: 0;
+  width: 45rem;
+  height: calc(60.9rem + var(--blurb-gap));
+  /* Same 173px ramp as Figma (28.407% of 609), then solid #0f0f0f */
+  background: linear-gradient(to bottom, rgba(15, 15, 15, 0) 0, #0f0f0f 17.3rem);
+}
+.h-hero__clouds {
+  position: absolute;
+  top: calc(97rem + var(--blurb-gap) - var(--cloud-lift));
+  z-index: 0;
+  /* Dissolve the photo's top edge into the #0f0f0f field — no visible seam */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 32rem);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 32rem);
+  left: -36.5rem;
+  width: 118rem;
+  height: 147.5rem;
+  object-fit: cover;
+}
+
+.h-intro {
+  position: absolute;
+  top: 90.6rem;
+  left: 4.9rem;
+  width: 35.2672rem;
+  color: #fff;
+  font-size: 2.0611rem;
+  line-height: 2.2901rem;
+  text-align: center;
+  scroll-margin-top: 30vh;
+}
+
+.h-checks__text {
+  position: absolute;
+  top: calc(116.4131rem + var(--blurb-gap));
+  left: 3.7rem;
+  width: 37.6718rem;
+  color: #fff;
+  font-size: 2.0611rem;
+  line-height: 2.5rem;
+  text-align: center;
+  mix-blend-mode: difference;
+}
+.h-stage { position: absolute; left: 7.5931rem; width: 29.771rem; }
+.h-stage--early { top: calc(133.8656rem + var(--blurb-gap)); }
+.h-stage--growth { top: calc(142.9115rem + var(--blurb-gap)); }
+/* Divider above each tier: Figma's 0.69px white rule, drawn as a solid 1px
+   line so every browser (Safari included) renders it. */
+.h-stage__rule { width: 29.771rem; height: 1px; background: #fff; }
+.h-stage p {
+  margin-top: 0.8473rem;
+  font-size: 1.6031rem;
+  line-height: 2rem;
+  color: #fff;
+  text-align: center;
+}
+.h-stage--early p { margin-left: 0.1146rem; width: 29.771rem; }
+
+/* Portfolio logos — open grid: interior hairlines only, each stopping short
+   of the crossings so no two lines ever touch. Cells carry the section grey
+   so multiply-blended logos with white grounds still disappear cleanly. */
+.h-logos { position: relative; height: 66.7rem; background: var(--light); }
+.h-logos__grid {
+  --gap-at-cross: 1.4rem;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  width: 40.9773rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 9rem;
+}
+.logo-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--light);
+}
+/* vertical rule on the right, horizontal rule on the bottom */
+.logo-cell::after,
+.logo-cell::before {
+  content: "";
+  position: absolute;
+  background: var(--rule);
+  pointer-events: none;
+}
+.logo-cell::after { top: var(--gap-at-cross); bottom: var(--gap-at-cross); right: 0; width: 1px; }
+.logo-cell::before { left: var(--gap-at-cross); right: var(--gap-at-cross); bottom: 0; height: 1px; }
+.logo-cell:nth-child(3n)::after { display: none; }            /* no outer right edge */
+.logo-cell:nth-last-child(-n + 3)::before { display: none; }  /* no outer bottom edge */
+.logo { position: relative; flex-shrink: 0; overflow: hidden; }
+.logo img { position: absolute; max-width: none; }
+.logo .fit-cover { inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.logo .fit-contain { inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.logo .fit-fill { inset: 0; width: 100%; height: 100%; }
+.logo { mix-blend-mode: multiply; }
+.logo--tincan {
+  -webkit-mask: url("../assets/logos/tincan-mask.svg") 0 0 / 5.4378rem 2.4755rem no-repeat;
+  mask: url("../assets/logos/tincan-mask.svg") 0 0 / 5.4378rem 2.4755rem no-repeat;
+}
+
+.h-logos__all {
+  position: absolute;
+  top: 60.5rem;
+  right: 11.2rem;
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #555;
+  transition: color 0.3s ease;
+}
+.h-logos__all:hover { color: #000; }
+
+/* ==========================================================================
+   Shared intro (Team / Portfolio first frame)
+   ========================================================================== */
+.intro { position: relative; height: 80rem; background: var(--light); }
+.intro__text {
+  position: absolute;
+  font-size: 1.9999rem;
+  line-height: 2.4rem;
+  text-align: center;
+  color: var(--light);
+  mix-blend-mode: difference;
+}
+
+/* ==========================================================================
+   TEAM
+   ========================================================================== */
+.t-intro .intro__text { top: 35.2rem; left: 6.7379rem; width: 31.5243rem; }
+.t-intro .inline-logo {
+  display: inline-block;
+  width: 11.2778rem;
+  height: 1.4586rem;
+  margin: 0 0.67rem 0 0.93rem;
+  vertical-align: -0.12rem;
+}
+
+.t-stage { position: relative; padding-top: 60rem; }
+
+/* The photo pins to the top (531 design px visible, as in Figma 3186:1283)
+   while the names scroll up beneath it. Its track ends one "bottom area"
+   before the list does, so the photo releases and scrolls away just as the
+   last names come into view (Figma 3186:1380). */
+.t-photo-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: max(0px, calc(100vh - 53.1rem));
+  bottom: max(0px, calc(100svh - 53.1rem));
+  z-index: 2;
+  pointer-events: none;
+}
+.t-photo-track > * { pointer-events: auto; }
+
+.t-photo-pin {
+  position: sticky;
+  top: -6.9rem;
+}
+.t-photo {
+  position: relative;
+  height: 60rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+}
+.t-photo::-webkit-scrollbar { display: none; }
+.t-photo.is-dragging { cursor: grabbing; }
+.t-photo__inner { position: relative; width: 90.1rem; height: 60rem; overflow: hidden; }
+.t-photo__inner img {
+  position: absolute;
+  left: 0.02%;
+  top: 0.05%;
+  width: 99.95%;
+  height: 100%;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.t-bios {
+  position: relative;
+  z-index: 1;
+  background: var(--light);
+  padding: 3.6rem 3.6rem 6rem;
+}
+.bio { position: relative; }
+/* Figma's rule is 0.4px black. Safari skips lines thinner than a pixel, so it's
+   drawn as a 1px line at 40% black, which reads the same on the grey ground. */
+.bio::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.4);
+}
+.bio + .bio { margin-top: 1rem; }
+/* Rows (and bio lines) that have reached the pinned photo disappear */
+.bio::before, .bio__head, .bio__body p { transition: opacity 0.4s ease; }
+.bio.is-head-past::before, .bio__head.is-past, .bio__body p.is-past { opacity: 0; }
+.bio__head {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding-top: 1rem;
+  text-align: left;
+  text-transform: uppercase;
+}
+.bio__name { display: block; font-size: 1.4rem; line-height: 1.4rem; color: #000; }
+.bio__role { display: block; margin-top: 0.2rem; font-size: 1.4rem; line-height: 1.4rem; color: var(--muted); }
+.bio__icon { position: absolute; top: 1rem; right: 0; width: 2.4rem; height: 2.4rem; }
+.bio__icon img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  transition: opacity 0.35s ease, transform 0.5s var(--ease-out);
+}
+.bio__icon .is-minus { opacity: 0; transform: rotate(-90deg); }
+.bio.is-open .bio__icon .is-plus { opacity: 0; transform: rotate(90deg); }
+.bio.is-open .bio__icon .is-minus { opacity: 1; transform: none; }
+
+.bio__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s var(--ease-io);
+}
+.bio.is-open .bio__panel { grid-template-rows: 1fr; }
+.bio__clip { overflow: hidden; min-height: 0; }
+.bio__body {
+  padding: 2rem 0 1rem;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.bio.is-open .bio__body { opacity: 1; transition: opacity 0.6s ease 0.15s; }
+.bio__body p + p { margin-top: 1.7rem; }
+
+.t-portrait { background: var(--light); overflow: hidden; }
+.t-portrait img { width: 45rem; height: 56.25rem; object-fit: cover; }
+
+.t-quote {
+  position: relative;
+  height: 40rem;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.t-quote figure {
+  width: 33.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+  color: var(--light);
+  mix-blend-mode: difference;
+}
+.t-quote blockquote { font-size: 2rem; line-height: 2.4rem; }
+.t-quote figcaption { font-size: 1.4rem; line-height: 1.7rem; }
+
+/* ==========================================================================
+   PORTFOLIO
+   ========================================================================== */
+.p-intro .intro__text { top: 34rem; left: 4.8092rem; width: 35.3816rem; }
+.p-intro .intro__logo { height: 2.4rem; }
+.p-intro .intro__logo img { width: 11.2778rem; height: 1.4586rem; margin: 0 auto; position: relative; top: 0.6rem; }
+
+/* Featured companies — a native horizontal scroller (touch swipe, trackpad,
+   shift+wheel), snapping card by card. The next card peeks in from the right. */
+.p-featured {
+  background: var(--light);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+}
+.p-featured::-webkit-scrollbar { display: none; }
+.p-featured.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+.p-featured:focus { outline: none; }
+.p-featured__track { display: flex; width: max-content; }
+.feature {
+  position: relative;
+  flex: 0 0 33.75rem;
+  height: 45rem;
+  overflow: hidden;
+  background: #fff;
+  scroll-snap-align: start;
+}
+.feature--red { background: #bf5252; }
+.feature--deep { background: #974242; }
+/* Each photo's box is positioned per card to match Figma (3197:423) */
+.feature__media { position: absolute; overflow: hidden; }
+.feature__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform: scale(1.1);
+  transition: transform 1.8s var(--ease-out);
+}
+.feature__media .crop { inset: auto; object-fit: fill; }
+.feature.is-in .feature__media img { transform: none; }
+.feature__label {
+  position: absolute;
+  top: calc(50% - 1.125rem);
+  left: 0;
+  right: 0;
+  font-size: 2rem;
+  line-height: 2rem;
+  letter-spacing: -0.02rem;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate3d(0, 1rem, 0);
+  transition: opacity 1s var(--ease-out) 0.25s, transform 1s var(--ease-out) 0.25s;
+}
+.feature__label--skims { left: 13.275rem; right: auto; font-size: 2.25rem; line-height: 2.25rem; letter-spacing: -0.0225rem; text-align: left; }
+.feature.is-in .feature__label { opacity: 1; transform: none; }
+
+.p-list {
+  position: relative;
+  overflow-anchor: none;
+  background: var(--light);
+  padding: 0 2rem 4rem;
+}
+.p-list__head {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  margin: 0 -2rem;
+  padding: 2rem 2rem 3.1rem;
+  background: var(--light);
+}
+.chips {
+  display: flex;
+  gap: 2rem;
+  margin: 0 -2rem;
+  padding: 0 2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding: 0 2rem;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #fff;
+  font-size: 1.4rem;
+  line-height: 1.4rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.35s ease;
+}
+.chip__x { width: 0.9975rem; height: 0.9975rem; display: none; }
+.chip.is-active { background: var(--chip-active); }
+.chip.is-active .chip__x { display: block; animation: chip-x 0.35s var(--ease-out); }
+@keyframes chip-x { from { opacity: 0; transform: scale(0.4) rotate(-90deg); } }
+.chips::after { content: ""; flex: 0 0 0.01rem; }
+
+.p-thumb {
+  position: relative;
+  margin-top: 4rem;
+  width: 41rem;
+  height: 32.8rem;
+  background: var(--thumb-empty);
+  overflow: hidden;
+}
+.p-thumb__layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+.p-thumb__layer.is-current { opacity: 1; }
+.p-thumb__layer img { position: absolute; max-width: none; }
+.p-thumb__layer img.cover { inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+.p-rows { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 0.1rem; }
+.p-row {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 0.4rem;
+  font-size: 1.4rem;
+  line-height: 1.4rem;
+  text-transform: uppercase;
+  text-align: left;
+  opacity: 0.2;
+  transition: opacity 0.5s ease;
+}
+.p-row::before {
+  content: "";
+  position: absolute;
+  top: -0.1rem;
+  left: 0;
+  right: 0;
+  height: 0.1rem;
+  min-height: 1px;
+  background: #000;
+}
+.p-row.is-active { opacity: 1; }
+/* Companies already scrolled past fade out completely */
+.p-row.is-past { opacity: 0; }
+.p-row__name { letter-spacing: -0.014rem; }
+/* Figma: #e4e4e4 + difference at 30% on the #e4e4e4 ground = black at 30% */
+.p-row__tag { color: #000; opacity: 0.3; }
+.p-row[hidden] { display: none; }
+.p-row.is-entering { animation: row-in 0.6s var(--ease-out) both; animation-delay: var(--d, 0s); }
+@keyframes row-in { from { transform: translate3d(0, 0.8rem, 0); } }
+.p-empty { padding-top: 0.4rem; font-size: 1.4rem; line-height: 1.4rem; text-transform: uppercase; color: var(--muted); }
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; transition-delay: 0s !important; }
+  [data-reveal] { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
+}
