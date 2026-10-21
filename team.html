@@ -290,7 +290,10 @@
       const updatePast = () => {
         // clear zone under the photo: 36 design px (same as the list's top inset)
         const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
-        const edge = pin.getBoundingClientRect().bottom + 3.6 * rem;
+        // The first name starts exactly on this line, and at fractional rem
+        // sizes (phones) rounding can put it a hair above; 1px of slack keeps
+        // it visible until it actually scrolls up.
+        const edge = pin.getBoundingClientRect().bottom + 3.6 * rem - 1;
         for (const el of tracked) {
           const past = el.getBoundingClientRect().top < edge;
           el.classList.toggle("is-past", past);
