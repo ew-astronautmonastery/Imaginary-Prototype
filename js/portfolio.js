@@ -233,6 +233,11 @@
       if (e.key === "ArrowRight") strip.scrollBy({ left: cardW(), behavior: "smooth" });
       if (e.key === "ArrowLeft") strip.scrollBy({ left: -cardW(), behavior: "smooth" });
     });
+    // "Swipe →" advances one card, wrapping back to the start at the end
+    document.querySelector("[data-swipe-next]")?.addEventListener("click", () => {
+      const atEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 2;
+      strip.scrollTo({ left: atEnd ? 0 : strip.scrollLeft + cardW(), behavior: reduce ? "auto" : "smooth" });
+    });
   }
 
   /* ---------- Init ---------- */

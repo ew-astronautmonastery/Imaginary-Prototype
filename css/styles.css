@@ -255,7 +255,7 @@ html.is-leaving .page { opacity: 0; transition: opacity 0.35s ease; }
 
 .h-hero__tag {
   position: absolute;
-  top: 38.015rem;
+  top: 36.615rem;
   left: 0.014rem;
   right: 0;
   text-align: center;
@@ -268,7 +268,7 @@ html.is-leaving .page { opacity: 0; transition: opacity 0.35s ease; }
   text-transform: uppercase;
   white-space: nowrap;
 }
-.h-hero__tag img { width: 12.0229rem; height: 1.5549rem; margin: 0.088rem auto 0; }
+.h-hero__tag img { width: 29.9rem; height: 3.867rem; margin: 0.488rem auto 0; }
 
 .h-hero__fade {
   position: absolute;
@@ -610,6 +610,26 @@ html.is-leaving .page { opacity: 0; transition: opacity 0.35s ease; }
 }
 .feature__label--skims { left: 13.275rem; right: auto; font-size: 2.25rem; line-height: 2.25rem; letter-spacing: -0.0225rem; text-align: left; }
 .feature.is-in .feature__label { opacity: 1; transform: none; }
+
+/* "Swipe →" under the carousel (Figma 3202:1125); tapping it advances a card */
+.p-swipe {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem 2rem 0;
+  height: 7.2rem;
+  background: var(--light);
+}
+.p-swipe button {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  height: 2.4rem;
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  font-weight: 400;
+  color: #1f1f1f;
+}
+.p-swipe img { width: 2.4rem; height: 2.4rem; }
 
 .p-list {
   position: relative;
